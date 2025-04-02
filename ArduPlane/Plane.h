@@ -149,6 +149,7 @@ public:
 
     friend class Mode;
     friend class ModeCircle;
+    friend class ModeTestMode;
     friend class ModeStabilize;
     friend class ModeTraining;
     friend class ModeAcro;
@@ -342,6 +343,7 @@ private:
 #if AP_QUICKTUNE_ENABLED
     AP_Quicktune quicktune;
 #endif
+    ModeTestMode mode_testmode;
     
     // This is the state of the flight control system
     // There are multiple states defined such as MANUAL, FBW-A, AUTO

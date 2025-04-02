@@ -69,7 +69,7 @@ public:
 #if MODE_AUTOLAND_ENABLED
         AUTOLAND      = 26,
 #endif
-
+        TESTMODE      = 27,
     // Mode number 30 reserved for "offboard" for external/lua control.
     };
 
@@ -386,6 +386,26 @@ public:
     Number mode_number() const override { return Number::CIRCLE; }
     const char *name() const override { return "CIRCLE"; }
     const char *name4() const override { return "CIRC"; }
+
+    // methods that affect movement of the vehicle in this mode
+    void update() override;
+
+    bool does_auto_navigation() const override { return true; }
+
+    bool does_auto_throttle() const override { return true; }
+
+protected:
+
+    bool _enter() override;
+};
+
+class ModeTestMode: public Mode
+{
+public:
+
+    Number mode_number() const override { return Number::TESTMODE; }
+    const char *name() const override { return "TESTMODE"; }
+    const char *name4() const override { return "TSTM"; }
 
     // methods that affect movement of the vehicle in this mode
     void update() override;
