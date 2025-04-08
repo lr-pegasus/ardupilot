@@ -129,7 +129,7 @@ protected:
         float elevatorDeflectionLimitDeg = -12.5;
         float deltaCNperRadianElev = -0.7;
         float deltaCAperRadianElev = 0.12;
-        float deltaCmperRadianElev = 1.39;
+        float deltaCmperRadianElev = -1.39;
         float deltaCYperRadianElev = 0;
         float deltaClperRadianElev = 0;
         float deltaCnperRadianElev = 0;

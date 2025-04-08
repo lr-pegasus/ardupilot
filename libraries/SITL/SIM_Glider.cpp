@@ -127,12 +127,14 @@ Vector3f Glider::getTorque(float inputAileron, float inputElevator, float inputR
     float Mz = Cn * qPa * m.Sref * m.refSpan;
 
 
-#if 0
-    AP::logger().Write("GLT", "TimeUS,Alpha,Beta,Cl,Cm,Cn", "Qfffff",
+#if 1
+    AP::logger().Write("GLT", "TimeUS,Alpha,Beta,Cl,Cm,Cn,inputElevator", "Qffffff",
                        AP_HAL::micros64(),
                        degrees(alpharad),
                        degrees(betarad),
-                       Cl, Cm, Cn);
+                       Cl, Cm, Cn,
+                       inputElevator
+                    );
 #endif
 
     return Vector3f(Mx/m.IXX, My/m.IYY, Mz/m.IZZ);
@@ -223,13 +225,13 @@ Vector3f Glider::getForce(float inputAileron, float inputElevator, float inputRu
 
 void Glider::calculate_forces(const struct sitl_input &input, Vector3f &rot_accel, Vector3f &body_accel)
 {
-    filtered_servo_setup(1, 1100, 1900, model.aileronDeflectionLimitDeg);
-    filtered_servo_setup(4, 1100, 1900, model.aileronDeflectionLimitDeg);
-    filtered_servo_setup(2, 1100, 1900, model.elevatorDeflectionLimitDeg);
+    filtered_servo_setup(0, 1100, 1900, model.aileronDeflectionLimitDeg);
+    // filtered_servo_setup(3, 1100, 1900, model.aileronDeflectionLimitDeg);
+    filtered_servo_setup(1, 1100, 1900, model.elevatorDeflectionLimitDeg);
     filtered_servo_setup(3, 1100, 1900, model.rudderDeflectionLimitDeg);
     
-    float aileron  = 0.5*(filtered_servo_angle(input, 1) + filtered_servo_angle(input, 4));
-    float elevator = filtered_servo_angle(input, 2);
+    float aileron  = filtered_servo_angle(input, 0);
+    float elevator = filtered_servo_angle(input, 1);
     float rudder   = filtered_servo_angle(input, 3);
     float balloon  = MAX(0.0f, filtered_servo_range(input, 5)); // Don't let the balloon receive downwards commands.
     float balloon_cut = filtered_servo_range(input, 9);
