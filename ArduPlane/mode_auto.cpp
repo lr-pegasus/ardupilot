@@ -116,7 +116,13 @@ void ModeAuto::update()
             plane.steer_state.hold_course_cd = -1;
         }
         plane.calc_nav_roll();
+        
+        #if 1
+        plane.nav_pitch_cd = -500;
+        #else
         plane.calc_nav_pitch();
+        #endif
+
         plane.calc_throttle();
     }
 }
